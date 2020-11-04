@@ -1,0 +1,28 @@
+run_analysis.R script prepares the data and then accomplish the course project’s 5 steps.
+
+##Acquiring the data set
+Download and extract the data under folder UCI HAR Dataset
+
+##Conversion to Data Frame
+It converts the data set into a data frame file by file
+data.test <-  data.frame(data.test.subject, data.test.activity, data.test.x)
+names(data.test) <- c(c('subject', 'activity'), features)
+
+##Merging test and train sets 
+It merges into data.all the test and train sets. 
+data.all <- rbind(data.train, data.test)
+
+##Standard deviation and mean for each measurement
+It calculates the standard deviation and mean for the test and train measurements
+mean_std.select <- grep('mean|std', features)
+data.sub <- data.all[,c(1,2,mean_std.select + 2)]
+
+##Using Descriptipe activity names
+By reading the labels from the activity_labels.txt file it Uses descriptive activity names to name the activities in the data set
+
+##Labeling data set appropriately 
+The code replaces the names in data set with names from activity labels
+names(data.sub) <- name.new
+
+##Creation of a second tidy data set and output
+write.table(x = data.tidy, file = "tidy_data.txt", row.names = FALSE)
